@@ -1,0 +1,45 @@
+{
+    "version": "1",
+    "form": {
+      "key": "Screen",
+      "type": "Screen",
+      "props": {},
+      "children": [
+        {
+          "id":1,
+          "key": "RsLabel 1",
+          "type": "RsLabel",
+          "props": {}
+        },
+        {
+          "id":2,
+          "key": "RsInput 1",
+          "type": "RsInput",
+          "props": {}
+        },
+        {
+          "id":3,
+          "key": "RsCheckbox 1",
+          "type": "RsCheckbox",
+          "props": {}
+        },
+        {
+          "id":4,
+          "key": "RsButton 1",
+          "type": "RsButton",
+          "props": {}
+        }
+      ]
+    },
+    "localization": {},
+    "languages": [
+      {
+        "code": "en",
+        "dialect": "US",
+        "name": "English",
+        "description": "American English",
+        "bidi": "ltr"
+      }
+    ],
+    "defaultLanguage": "en-US"
+  }
