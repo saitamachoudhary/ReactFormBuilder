@@ -12,9 +12,6 @@ export const Buttons = () => {
         setOpen(false);
     };
     return (
-        // <Card.Grid style={{width:'100%'}}>
-        //    <Button type="primary">Submit</Button>
-        // </Card.Grid>
         <Card>
             <EditOutlined style={{ fontSize: '20px' }} onClick={showDrawer} />
             <Card.Grid style={{ width: '100%' }}>
