@@ -68,6 +68,8 @@ export const CheckBoxs = () => {
     const [checkboxValue, setcheckboxValue] = React.useState("checkbox");
     const [open, setOpen] = React.useState(false);
     const [checkboxElement, setcheckboxElement] = React.useState([]);
+    const [editIndex, setEditIndex] = React.useState(null);
+    const [editName, setEditName] = React.useState('');
     const showDrawer = () => {
         setOpen(true);
     };
@@ -75,44 +77,75 @@ export const CheckBoxs = () => {
         setOpen(false);
     };
     const addcheckbox = () => {
-         const newElement=<Checkbox key={Date.now()}>{checkboxValue}</Checkbox>;
-         setcheckboxElement((prev)=>[...prev,newElement]);
-        // if (checkboxValue.trim() !== '') {
-        //     setcheckboxElement([...checkboxElement, { name: checkboxValue }]);
-        //     // setcheckboxValue('');
-        // }
+        //  const newElement=<Checkbox key={Date.now()}>{checkboxValue}</Checkbox>;
+        //  setcheckboxElement((prev)=>[...prev,newElement]);
+        if (checkboxValue.trim() !== '') {
+            setcheckboxElement([...checkboxElement, { name: checkboxValue }]);
+            setcheckboxValue('');
+        }
     }
+    const handleEditCheckbox = (index) => {
+        setEditIndex(index);
+        setEditName(checkboxElement[index].name);
+    };
+
+    const handleSaveEdit = () => {
+        if (editName.trim() !== '') {
+            const newCheckboxes = [...checkboxElement];
+            newCheckboxes[editIndex].name = editName;
+            setcheckboxElement(newCheckboxes);
+            setEditIndex(null);
+            setEditName('');
+        }
+    };
+    const handleCancelEdit = () => {
+        setEditIndex(null);
+        setEditName('');
+    };
     return (
         <Card>
             <EditOutlined style={{ fontSize: '20px' }} onClick={showDrawer} />
             <Card.Grid style={{ width: '100%' }}>
-                {/* {checkboxElement.map((ele, index) => {
+                {checkboxElement.map((ele, index) => {
                     return (
                         <div key={index}>
                             <Checkbox>{checkboxValue}</Checkbox>
                         </div>
                     )
-                })} */}
-                {checkboxElement.map((ele)=>{
-                    return (
-                        <div>{ele}</div>
-                    )
                 })}
-
             </Card.Grid>
             <Drawer title="Edit Element" onClose={onClose} open={open}>
                 <h1>Edit</h1>
                 <Form>
-                    {
-                        // checkboxElement.map(() => {
-                        //     return (
-                                <Form.Item label="Checkbox Value">
-                                    <Input value={checkboxValue} onChange={(e) => setcheckboxValue(e.target.value)} />
-                                    <PlusOutlined onClick={addcheckbox} />
-                                </Form.Item>
-                        //     )
-                        // })
-                    }
+                    <Form.Item label="Checkbox Value">
+                        {checkboxElement.map((checkbox, index) => (
+                            <div key={index}>
+                                {editIndex === index ? (
+                                    <div>
+                                        <input
+                                            type="text"
+                                            value={editName}
+                                            onChange={(e) => setEditName(e.target.value)}
+                                        />
+                                        <button onClick={handleSaveEdit}>Save</button>
+                                        <button onClick={handleCancelEdit}>Cancel</button>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <input
+                                            type="checkbox"
+                                            checked={checkbox.checked}
+                                            onChange={() => handleCheckboxChange(index)}
+                                        />
+                                        <label>{checkbox.name}</label>
+                                        <button onClick={() => handleEditCheckbox(index)}>Edit</button>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                        <Input value={checkboxValue} onChange={(e) => setcheckboxValue(e.target.value)} />
+                        <PlusOutlined onClick={addcheckbox} />
+                    </Form.Item>
                 </Form>
             </Drawer>
         </Card>
