@@ -1,10 +1,10 @@
 import React from "react";
-import { Card, Input, Button, Checkbox, Drawer,Form} from "antd";
-import { EditOutlined } from "@ant-design/icons";
+import { Card, Input, Button, Checkbox, Drawer, Form } from "antd";
+import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 
 export const Buttons = () => {
     const [open, setOpen] = React.useState(false);
-    const [buttonValue,setbuttonValue]=React.useState("Submit")
+    const [buttonValue, setbuttonValue] = React.useState("Submit")
     const showDrawer = () => {
         setOpen(true);
     };
@@ -21,7 +21,7 @@ export const Buttons = () => {
                 <h1>Edit</h1>
                 <Form>
                     <Form.Item>
-                        <Input value={buttonValue} onChange={(e)=>setbuttonValue(e.target.value)}/>
+                        <Input value={buttonValue} onChange={(e) => setbuttonValue(e.target.value)} />
                     </Form.Item>
                 </Form>
             </Drawer>
@@ -31,8 +31,8 @@ export const Buttons = () => {
 
 export const Inputs = () => {
     const [open, setOpen] = React.useState(false);
-    const [label,setlabel]=React.useState("");
-    const [inputPlaceholder,setinputPlaceholder]=React.useState("");
+    const [label, setlabel] = React.useState("");
+    const [inputPlaceholder, setinputPlaceholder] = React.useState("");
     const showDrawer = () => {
         setOpen(true);
     };
@@ -42,22 +42,21 @@ export const Inputs = () => {
     return (
         <Card>
             <EditOutlined style={{ fontSize: '20px' }} onClick={showDrawer} />
-        <Card.Grid style={{ width: '100%' }}>
-            <Form>
-                <Form.Item label={label}>
-                    <Input placeholder={inputPlaceholder}/>
-                </Form.Item>
-            </Form>
-        </Card.Grid>
-        <Drawer title="Edit Element" onClose={onClose} open={open}>
+            <Card.Grid style={{ width: '100%' }}>
+                <Form>
+                    <Form.Item label={label}>
+                        <Input placeholder={inputPlaceholder} />
+                    </Form.Item>
+                </Form>
+            </Card.Grid>
+            <Drawer title="Edit Element" onClose={onClose} open={open}>
                 <h1>Edit</h1>
                 <Form>
-                    <Form.Item
-                    >
+                    <Form.Item>
                         <h3>label</h3>
-                      <Input value={label} onChange={(e)=>{setlabel(e.target.value)}}/>
-                      <h3>placeholder</h3>
-                      <Input value={inputPlaceholder} onChange={(e)=>setinputPlaceholder(e.target.value)}/>
+                        <Input value={label} onChange={(e) => { setlabel(e.target.value) }} />
+                        <h3>placeholder</h3>
+                        <Input value={inputPlaceholder} onChange={(e) => setinputPlaceholder(e.target.value)} />
                     </Form.Item>
                 </Form>
             </Drawer>
@@ -66,28 +65,54 @@ export const Inputs = () => {
 }
 
 export const CheckBoxs = () => {
-    const [checkboxValue,setcheckboxValue]=React.useState("CheckBox");
+    const [checkboxValue, setcheckboxValue] = React.useState("checkbox");
     const [open, setOpen] = React.useState(false);
+    const [checkboxElement, setcheckboxElement] = React.useState([]);
     const showDrawer = () => {
         setOpen(true);
     };
     const onClose = () => {
         setOpen(false);
     };
+    const addcheckbox = () => {
+         const newElement=<Checkbox key={Date.now()}>{checkboxValue}</Checkbox>;
+         setcheckboxElement((prev)=>[...prev,newElement]);
+        // if (checkboxValue.trim() !== '') {
+        //     setcheckboxElement([...checkboxElement, { name: checkboxValue }]);
+        //     // setcheckboxValue('');
+        // }
+    }
     return (
         <Card>
             <EditOutlined style={{ fontSize: '20px' }} onClick={showDrawer} />
-        <Card.Grid style={{ width: '100%' }}>
-            <Checkbox>{checkboxValue}</Checkbox>
-        </Card.Grid>
-        <Drawer title="Edit Element" onClose={onClose} open={open}>
+            <Card.Grid style={{ width: '100%' }}>
+                {/* {checkboxElement.map((ele, index) => {
+                    return (
+                        <div key={index}>
+                            <Checkbox>{checkboxValue}</Checkbox>
+                        </div>
+                    )
+                })} */}
+                {checkboxElement.map((ele)=>{
+                    return (
+                        <div>{ele}</div>
+                    )
+                })}
+
+            </Card.Grid>
+            <Drawer title="Edit Element" onClose={onClose} open={open}>
                 <h1>Edit</h1>
                 <Form>
-                    <Form.Item label="Checkbox Value"
-                    >
-                        <Input value={checkboxValue} onChange={(e)=>setcheckboxValue(e.target.value)}/>
-                    </Form.Item>
-
+                    {
+                        // checkboxElement.map(() => {
+                        //     return (
+                                <Form.Item label="Checkbox Value">
+                                    <Input value={checkboxValue} onChange={(e) => setcheckboxValue(e.target.value)} />
+                                    <PlusOutlined onClick={addcheckbox} />
+                                </Form.Item>
+                        //     )
+                        // })
+                    }
                 </Form>
             </Drawer>
         </Card>
@@ -96,7 +121,7 @@ export const CheckBoxs = () => {
 
 export const Labels = () => {
     const [open, setOpen] = React.useState(false);
-    const [label,setlabel]=React.useState("Label");
+    const [label, setlabel] = React.useState("Label");
     const showDrawer = () => {
         setOpen(true);
     };
@@ -106,17 +131,16 @@ export const Labels = () => {
     return (
         <Card>
             <EditOutlined style={{ fontSize: '20px' }} onClick={showDrawer} />
-        <Card.Grid style={{ width: '100%' }}>
-            <label htmlFor="">{label}</label>
-        </Card.Grid>
-        <Drawer title="Edit Element" onClose={onClose} open={open}>
+            <Card.Grid style={{ width: '100%' }}>
+                <label htmlFor="">{label}</label>
+            </Card.Grid>
+            <Drawer title="Edit Element" onClose={onClose} open={open}>
                 <h1>Edit</h1>
                 <Form>
                     <Form.Item label="Label Value"
                     >
-                        <Input value={label} onChange={(e)=>setlabel(e.target.value)}/>
+                        <Input value={label} onChange={(e) => setlabel(e.target.value)} />
                     </Form.Item>
-
                 </Form>
             </Drawer>
         </Card>

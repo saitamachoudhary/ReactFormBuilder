@@ -7,7 +7,7 @@ import { Buttons, Inputs, CheckBoxs, Labels } from './formComponent/Element';
 const { Content } = Layout;
 const Contents = () => {
     const [dropElements, setdropElements] = React.useState([]);
-    console.log(dropElements)
+    // console.log(dropElements)
     const [{ isOver }, drop] = useDrop(() => ({
         accept: 'FormElements',
         drop: (item) => addToDrop(item.id),
