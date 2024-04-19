@@ -12,7 +12,7 @@ const Labels = ({id}) => {
   return (
     <Col span={8}>
     <Card ref={drag}>
-    <Card.Grid style={{width:'100%',textAlign:'center'}}>Label</Card.Grid>
+    <Card.Grid style={{width:'100%',textAlign:'center'}}>Header</Card.Grid>
   </Card>
   </Col>
   )

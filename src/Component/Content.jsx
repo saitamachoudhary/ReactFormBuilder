@@ -3,7 +3,7 @@ import { Layout, theme, Card,} from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useDrop } from 'react-dnd';
 import { form } from "../Data/Data.json";
-import { Buttons, Inputs, CheckBoxs, Labels } from './formComponent/Element';
+import { Buttons, Inputs, CheckBoxs, Headers } from './formComponent/Element';
 const { Content } = Layout;
 const Contents = () => {
     const [dropElements, setdropElements] = React.useState([]);
@@ -64,7 +64,7 @@ const Contents = () => {
                                     <div>
                                         <DeleteOutlined onClick={()=>Delete(item.id)} style={{fontSize:'20px'}}/>
                                     </div>
-                                    <Labels />
+                                    <Headers />
                                 </div>
                             case "RsInput 1":
                                 return (

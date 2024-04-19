@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, Input, Button, Checkbox, Drawer, Form } from "antd";
+import { Card, Input, Button, Checkbox, Drawer, Form,Typography } from "antd";
 import { EditOutlined, PlusOutlined,DeleteOutlined } from "@ant-design/icons";
+const { Title } = Typography;
 
 export const Buttons = () => {
     const [open, setOpen] = React.useState(false);
@@ -120,7 +121,7 @@ export const CheckBoxs = () => {
                     <Form.Item label="Value">
                         <Input value={checkboxValue} onChange={(e) => setcheckboxValue(e.target.value)} />
                         <PlusOutlined onClick={addcheckbox} />
-                        <DeleteOutlined style={{marginLeft:'5px'}} />
+                        {/* <DeleteOutlined style={{marginLeft:'5px'}} /> */}
                         {checkboxElement.map((checkbox, index) => (
                             <div key={index}>
                                 {editIndex === index ? (
@@ -148,7 +149,7 @@ export const CheckBoxs = () => {
     )
 }
 
-export const Labels = () => {
+export const Headers = () => {
     const [open, setOpen] = React.useState(false);
     const [label, setlabel] = React.useState("Label");
     const showDrawer = () => {
@@ -161,13 +162,13 @@ export const Labels = () => {
         <Card>
             <EditOutlined style={{ fontSize: '20px' }} onClick={showDrawer} />
             <Card.Grid style={{ width: '100%' }}>
-                <label htmlFor="">{label}</label>
+                {/* <label htmlFor="">{label}</label> */}
+                <Title level={3}>{label}</Title>
             </Card.Grid>
             <Drawer title="Edit Element" onClose={onClose} open={open}>
                 <h1>Edit</h1>
                 <Form>
-                    <Form.Item label="Label Value"
-                    >
+                    <Form.Item label="Label Value">
                         <Input value={label} onChange={(e) => setlabel(e.target.value)} />
                     </Form.Item>
                 </Form>

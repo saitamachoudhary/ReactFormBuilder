@@ -5,7 +5,7 @@ import { form } from "../Data/Data.json";
 import Inputs from './listComponent/Input';
 import Buttons from './listComponent/Button';
 import CheckBoxs from './listComponent/CheckBox';
-import Labels from './listComponent/Label';
+import Headers from './listComponent/Header';
 
 const Siders = () => {
     return (
@@ -15,7 +15,7 @@ const Siders = () => {
             {form.children.map((item) => {
                     switch (item.key) {
                         case "RsLabel 1":
-                            return <Labels id={item.id}/>
+                            return <Headers id={item.id}/>
                         case "RsInput 1":
                             return <Inputs id={item.id}/>
                         case "RsCheckbox 1":
