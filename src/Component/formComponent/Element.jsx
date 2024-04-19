@@ -106,45 +106,44 @@ export const CheckBoxs = () => {
         <Card>
             <EditOutlined style={{ fontSize: '20px' }} onClick={showDrawer} />
             <Card.Grid style={{ width: '100%' }}>
-                {checkboxElement.map((ele, index) => {
+                {/* {checkboxElement.map((ele, index) => {
                     return (
                         <div key={index}>
                             <Checkbox>{checkboxValue}</Checkbox>
                         </div>
                     )
-                })}
+                })} */}
+                {checkboxElement.map((checkbox, index) => (
+                           <div key={index}>
+                              <Checkbox onChange={()=>handleEditCheckbox(index)}>{checkbox.name}</Checkbox>
+                           </div>
+                        ))}
             </Card.Grid>
             <Drawer title="Edit Element" onClose={onClose} open={open}>
                 <h1>Edit</h1>
                 <Form>
                     <Form.Item label="Checkbox Value">
+                        <Input value={checkboxValue} onChange={(e) => setcheckboxValue(e.target.value)} />
+                        <PlusOutlined onClick={addcheckbox} />
                         {checkboxElement.map((checkbox, index) => (
                             <div key={index}>
                                 {editIndex === index ? (
                                     <div>
-                                        <input
+                                        <Input
                                             type="text"
                                             value={editName}
                                             onChange={(e) => setEditName(e.target.value)}
                                         />
-                                        <button onClick={handleSaveEdit}>Save</button>
-                                        <button onClick={handleCancelEdit}>Cancel</button>
+                                        <Button onClick={handleSaveEdit}>Save</Button>
+                                        <Button onClick={handleCancelEdit}>Cancel</Button>
                                     </div>
                                 ) : (
                                     <div>
-                                        <input
-                                            type="checkbox"
-                                            checked={checkbox.checked}
-                                            onChange={() => handleCheckboxChange(index)}
-                                        />
-                                        <label>{checkbox.name}</label>
-                                        <button onClick={() => handleEditCheckbox(index)}>Edit</button>
+                                        <Button onClick={() => handleEditCheckbox(index)}>Edit</Button>
                                     </div>
                                 )}
                             </div>
                         ))}
-                        <Input value={checkboxValue} onChange={(e) => setcheckboxValue(e.target.value)} />
-                        <PlusOutlined onClick={addcheckbox} />
                     </Form.Item>
                 </Form>
             </Drawer>
