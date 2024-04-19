@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Input, Button, Checkbox, Drawer, Form } from "antd";
-import { EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { EditOutlined, PlusOutlined,DeleteOutlined } from "@ant-design/icons";
 
 export const Buttons = () => {
     const [open, setOpen] = React.useState(false);
@@ -77,8 +77,6 @@ export const CheckBoxs = () => {
         setOpen(false);
     };
     const addcheckbox = () => {
-        //  const newElement=<Checkbox key={Date.now()}>{checkboxValue}</Checkbox>;
-        //  setcheckboxElement((prev)=>[...prev,newElement]);
         if (checkboxValue.trim() !== '') {
             setcheckboxElement([...checkboxElement, { name: checkboxValue }]);
             setcheckboxValue('');
@@ -102,17 +100,14 @@ export const CheckBoxs = () => {
         setEditIndex(null);
         setEditName('');
     };
+    const DeleteCheckBox=(index)=>{
+      const ele=checkboxElement.filter((ele,eleindex)=>eleindex!==index);
+      setcheckboxElement(ele);
+    }
     return (
         <Card>
             <EditOutlined style={{ fontSize: '20px' }} onClick={showDrawer} />
             <Card.Grid style={{ width: '100%' }}>
-                {/* {checkboxElement.map((ele, index) => {
-                    return (
-                        <div key={index}>
-                            <Checkbox>{checkboxValue}</Checkbox>
-                        </div>
-                    )
-                })} */}
                 {checkboxElement.map((checkbox, index) => (
                            <div key={index}>
                               <Checkbox onChange={()=>handleEditCheckbox(index)}>{checkbox.name}</Checkbox>
@@ -122,9 +117,10 @@ export const CheckBoxs = () => {
             <Drawer title="Edit Element" onClose={onClose} open={open}>
                 <h1>Edit</h1>
                 <Form>
-                    <Form.Item label="Checkbox Value">
+                    <Form.Item label="Value">
                         <Input value={checkboxValue} onChange={(e) => setcheckboxValue(e.target.value)} />
                         <PlusOutlined onClick={addcheckbox} />
+                        <DeleteOutlined style={{marginLeft:'5px'}} />
                         {checkboxElement.map((checkbox, index) => (
                             <div key={index}>
                                 {editIndex === index ? (
@@ -140,6 +136,7 @@ export const CheckBoxs = () => {
                                 ) : (
                                     <div>
                                         <Button onClick={() => handleEditCheckbox(index)}>Edit</Button>
+                                        <Button danger onClick={()=>DeleteCheckBox(index)}>Delete</Button>
                                     </div>
                                 )}
                             </div>
