@@ -28,6 +28,12 @@
           "key": "RsButton 1",
           "type": "RsButton",
           "props": {}
+        },
+        {
+          "id":5,
+          "key": "RsRadioGroup 1",
+          "type": "RsRadioGroup",
+          "props": {}
         }
       ]
     },

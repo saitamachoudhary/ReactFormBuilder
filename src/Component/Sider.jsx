@@ -6,6 +6,7 @@ import Inputs from './listComponent/Input';
 import Buttons from './listComponent/Button';
 import CheckBoxs from './listComponent/CheckBox';
 import Headers from './listComponent/Header';
+import RadioButton from './listComponent/RadioButton';
 
 const Siders = () => {
     return (
@@ -22,6 +23,8 @@ const Siders = () => {
                             return <CheckBoxs id={item.id}/>
                         case "RsButton 1":
                             return <Buttons id={item.id}/>
+                            case "RsRadioGroup 1":
+                            return <RadioButton id={item.id}/>
                         default:
                             break;
                     }

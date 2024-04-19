@@ -1,9 +1,9 @@
 import React from 'react';
-import { Layout, theme, Card,} from 'antd';
+import { Layout, theme, Card, Divider,} from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useDrop } from 'react-dnd';
 import { form } from "../Data/Data.json";
-import { Buttons, Inputs, CheckBoxs, Headers } from './formComponent/Element';
+import { Buttons, Inputs, CheckBoxs, Headers,RadioButton} from './formComponent/Element';
 const { Content } = Layout;
 const Contents = () => {
     const [dropElements, setdropElements] = React.useState([]);
@@ -87,6 +87,13 @@ const Contents = () => {
                                         <Buttons />
                                     </div>
                                 )
+                            case "RsRadioGroup 1":
+                                return (
+                                    <div style={{width:'100%'}}>
+                                         <DeleteOutlined onClick={()=>Delete(item.id)} />
+                                         <RadioButton/>
+                                    </div>
+                                )    
                             default:
                                 break;
                         }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Input, Button, Checkbox, Drawer, Form,Typography } from "antd";
+import { Card, Input, Button, Checkbox, Drawer, Form,Typography,Radio} from "antd";
 import { EditOutlined, PlusOutlined,DeleteOutlined } from "@ant-design/icons";
 const { Title } = Typography;
 
@@ -175,4 +175,18 @@ export const Headers = () => {
             </Drawer>
         </Card>
     )
+}
+
+export const RadioButton=()=>{
+  return (
+     <Card>
+        <Card.Grid style={{width:'100%'}}>
+            <Form>
+           <Form.Item label="RadioItem">
+            <Radio>A</Radio>
+           </Form.Item>
+           </Form>
+        </Card.Grid>
+     </Card>
+  )
 }
