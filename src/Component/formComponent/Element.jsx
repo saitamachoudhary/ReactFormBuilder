@@ -178,29 +178,39 @@ export const Headers = () => {
 }
 
 export const RadioButton = () => {
-    const[label,setlabel]=React.useState();
+    const[RadioValue,setRadioValue]=React.useState("Radio");
     const [open, setOpen] = React.useState(false);
+    const[Radioele,setRadioele]=React.useState([]);
     const showDrawer = () => {
         setOpen(true);
     };
     const onClose = () => {
         setOpen(false);
     };
+    const addRadio=()=>{
+     if (RadioValue.trim() !== '') {
+            setRadioele([...Radioele, { name: RadioValue }]);
+            setRadioValue('');
+        }
+    }
     return (
         <Card>
             <EditOutlined style={{ fontSize: '20px' }} onClick={showDrawer} />
             <Card.Grid style={{ width: '100%' }}>
                 <Form>
-                    <Form.Item label="RadioItem">
+                    {Radioele.map((ele)=>{
+                     return <Form.Item label={ele.name}>
                         <Radio>A</Radio>
                     </Form.Item>
+                    })}
                 </Form>
             </Card.Grid>
             <Drawer title="Edit Element" onClose={onClose} open={open}>
                 <h1>Edit</h1>
                 <Form>
                     <Form.Item label="Radio Value">
-                        <Input value={label} onChange={(e) => setlabel(e.target.value)} />
+                        <Input value={RadioValue} onChange={(e) => setRadioValue(e.target.value)} />
+                        <PlusOutlined onClick={addRadio} />
                     </Form.Item>
                 </Form>
             </Drawer>
