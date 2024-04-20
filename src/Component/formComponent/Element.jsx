@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, Input, Button, Checkbox, Drawer, Form,Typography,Radio} from "antd";
-import { EditOutlined, PlusOutlined,DeleteOutlined } from "@ant-design/icons";
+import { Card, Input, Button, Checkbox, Drawer, Form, Typography, Radio } from "antd";
+import { EditOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 const { Title } = Typography;
 
 export const Buttons = () => {
@@ -101,19 +101,19 @@ export const CheckBoxs = () => {
         setEditIndex(null);
         setEditName('');
     };
-    const DeleteCheckBox=(index)=>{
-      const ele=checkboxElement.filter((ele,eleindex)=>eleindex!==index);
-      setcheckboxElement(ele);
+    const DeleteCheckBox = (index) => {
+        const ele = checkboxElement.filter((ele, eleindex) => eleindex !== index);
+        setcheckboxElement(ele);
     }
     return (
         <Card>
             <EditOutlined style={{ fontSize: '20px' }} onClick={showDrawer} />
             <Card.Grid style={{ width: '100%' }}>
                 {checkboxElement.map((checkbox, index) => (
-                           <div key={index}>
-                              <Checkbox onChange={()=>handleEditCheckbox(index)}>{checkbox.name}</Checkbox>
-                           </div>
-                        ))}
+                    <div key={index}>
+                        <Checkbox onChange={() => handleEditCheckbox(index)}>{checkbox.name}</Checkbox>
+                    </div>
+                ))}
             </Card.Grid>
             <Drawer title="Edit Element" onClose={onClose} open={open}>
                 <h1>Edit</h1>
@@ -137,7 +137,7 @@ export const CheckBoxs = () => {
                                 ) : (
                                     <div>
                                         <Button onClick={() => handleEditCheckbox(index)}>Edit</Button>
-                                        <Button danger onClick={()=>DeleteCheckBox(index)}>Delete</Button>
+                                        <Button danger onClick={() => DeleteCheckBox(index)}>Delete</Button>
                                     </div>
                                 )}
                             </div>
@@ -177,16 +177,33 @@ export const Headers = () => {
     )
 }
 
-export const RadioButton=()=>{
-  return (
-     <Card>
-        <Card.Grid style={{width:'100%'}}>
-            <Form>
-           <Form.Item label="RadioItem">
-            <Radio>A</Radio>
-           </Form.Item>
-           </Form>
-        </Card.Grid>
-     </Card>
-  )
+export const RadioButton = () => {
+    const[label,setlabel]=React.useState();
+    const [open, setOpen] = React.useState(false);
+    const showDrawer = () => {
+        setOpen(true);
+    };
+    const onClose = () => {
+        setOpen(false);
+    };
+    return (
+        <Card>
+            <EditOutlined style={{ fontSize: '20px' }} onClick={showDrawer} />
+            <Card.Grid style={{ width: '100%' }}>
+                <Form>
+                    <Form.Item label="RadioItem">
+                        <Radio>A</Radio>
+                    </Form.Item>
+                </Form>
+            </Card.Grid>
+            <Drawer title="Edit Element" onClose={onClose} open={open}>
+                <h1>Edit</h1>
+                <Form>
+                    <Form.Item label="Radio Value">
+                        <Input value={label} onChange={(e) => setlabel(e.target.value)} />
+                    </Form.Item>
+                </Form>
+            </Drawer>
+        </Card>
+    )
 }
