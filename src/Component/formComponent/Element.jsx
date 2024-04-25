@@ -178,31 +178,58 @@ export const Headers = () => {
 }
 
 export const RadioButton = () => {
-    const[RadioValue,setRadioValue]=React.useState("Radio");
+    const [RadioValue, setRadioValue] = React.useState("Radio");
     const [open, setOpen] = React.useState(false);
-    const[Radioele,setRadioele]=React.useState([]);
+    const [Radioele, setRadioele] = React.useState([]);
+    const [editIndex, setEditIndex] = React.useState(null);
+    const [editName, setEditName] = React.useState('');
     const showDrawer = () => {
         setOpen(true);
     };
     const onClose = () => {
         setOpen(false);
     };
-    const addRadio=()=>{
-     if (RadioValue.trim() !== '') {
+    const addRadio = () => {
+        if (RadioValue.trim() !== '') {
             setRadioele([...Radioele, { name: RadioValue }]);
+
             setRadioValue('');
         }
+    }
+    const handleEditRadio = (index) => {
+        setEditIndex(index);
+        setEditName(Radioele[index].name);
+    };
+
+    const handleSaveEdit = () => {
+        if (editName.trim() !== '') {
+            const newRadio = [...Radioele];
+            newRadio[editIndex].name = editName;
+            setRadioele(newRadio);
+            setEditIndex(null);
+            setEditName('');
+        }
+    };
+    const handleCancelEdit = () => {
+        setEditIndex(null);
+        setEditName('');
+    };
+    const DeleteCheckBox = (index) => {
+        const ele = Radioele.filter((ele, eleindex) => eleindex !== index);
+        setRadioele(ele);
     }
     return (
         <Card>
             <EditOutlined style={{ fontSize: '20px' }} onClick={showDrawer} />
             <Card.Grid style={{ width: '100%' }}>
                 <Form>
-                    {Radioele.map((ele)=>{
-                     return <Form.Item label={ele.name}>
-                        <Radio>A</Radio>
-                    </Form.Item>
-                    })}
+                    {Radioele.map((ele) => (
+                        <Form.Item label={ele.name}>
+                            <Radio>A</Radio>
+                            <Radio>B</Radio>
+                            <Radio>C</Radio>
+                        </Form.Item>
+                    ))}
                 </Form>
             </Card.Grid>
             <Drawer title="Edit Element" onClose={onClose} open={open}>
@@ -211,6 +238,29 @@ export const RadioButton = () => {
                     <Form.Item label="Radio Value">
                         <Input value={RadioValue} onChange={(e) => setRadioValue(e.target.value)} />
                         <PlusOutlined onClick={addRadio} />
+                        {/* <Button type="primary">Add Radio Options</Button> */}
+                        {Radioele.map((ele, index) =>
+                        (
+                            <div key={index}>
+                                {editIndex === index ? (
+                                    <div>
+                                        <Input
+                                            type="text"
+                                            value={editName}
+                                            onChange={(e) => setEditName(e.target.value)}
+                                        />
+                                        <Button onClick={handleSaveEdit}>Save</Button>
+                                        <Button onClick={handleCancelEdit}>Cancel</Button>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <Button onClick={() => handleEditRadio(index)}>Edit</Button>
+                                        <Button danger onClick={() => DeleteCheckBox(index)}>Delete</Button>
+                                    </div>
+                                )}
+                            </div>
+                        )
+                        )}
                     </Form.Item>
                 </Form>
             </Drawer>
