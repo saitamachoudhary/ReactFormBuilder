@@ -183,6 +183,10 @@ export const RadioButton = () => {
     const [Radioele, setRadioele] = React.useState([]);
     const [editIndex, setEditIndex] = React.useState(null);
     const [editName, setEditName] = React.useState('');
+    const [RadioValueoptions, setRadioValueoptions] = React.useState("A");
+    const [RadioeleOptions, setRadioeleOptions] = React.useState([]);
+    const [editIndexoptions, setEditIndexoptions] = React.useState(null);
+    const [editNameoptions, setEditNameoptions] = React.useState('');
     const showDrawer = () => {
         setOpen(true);
     };
@@ -218,6 +222,34 @@ export const RadioButton = () => {
         const ele = Radioele.filter((ele, eleindex) => eleindex !== index);
         setRadioele(ele);
     }
+
+    const addRadioOptions = () => {
+        if (RadioValueoptions.trim() !== '') {
+            setRadioeleOptions([...RadioeleOptions, { name: RadioValueoptions }]);
+        }
+    }
+    const handleEditRadioOptions = (index) => {
+        setEditIndexoptions(index);
+        setEditNameoptions(RadioeleOptions[index].name);
+    };
+    const handleSaveEditOptions = () => {
+        if (editNameoptions.trim() !== '') {
+            const newRadioOptions = [...RadioeleOptions];
+            console.log(newRadioOptions)
+            newRadioOptions[editIndexoptions].name = editNameoptions;
+            setRadioeleOptions(newRadioOptions);
+            setEditIndexoptions(null);
+            setEditNameoptions('');
+        }
+    };
+    const handleCancelEditOptions = () => {
+        setEditIndexoptions(null);
+        setEditNameoptions('');
+    };
+    const DeleteCheckBoxOptions = (index) => {
+        const eleoptions = RadioeleOptions.filter((ele, eleindex) => eleindex !== index);
+        setRadioeleOptions(eleoptions);
+    }
     return (
         <Card>
             <EditOutlined style={{ fontSize: '20px' }} onClick={showDrawer} />
@@ -225,9 +257,11 @@ export const RadioButton = () => {
                 <Form>
                     {Radioele.map((ele) => (
                         <Form.Item label={ele.name}>
-                            <Radio>A</Radio>
-                            <Radio>B</Radio>
-                            <Radio>C</Radio>
+                            <Radio.Group>
+                                {RadioeleOptions.map((eleoptions, index) => (
+                                    <Radio key={index}>{eleoptions.name}</Radio>
+                                ))}
+                            </Radio.Group>
                         </Form.Item>
                     ))}
                 </Form>
@@ -238,7 +272,6 @@ export const RadioButton = () => {
                     <Form.Item label="Radio Value">
                         <Input value={RadioValue} onChange={(e) => setRadioValue(e.target.value)} />
                         <PlusOutlined onClick={addRadio} />
-                        {/* <Button type="primary">Add Radio Options</Button> */}
                         {Radioele.map((ele, index) =>
                         (
                             <div key={index}>
@@ -261,6 +294,30 @@ export const RadioButton = () => {
                             </div>
                         )
                         )}
+                    </Form.Item>
+                    <Form.Item label="RadioOption Value">
+                        <Input value={RadioValueoptions} onChange={(e) => setRadioValueoptions(e.target.value)} />
+                        <Button type="primary" style={{ marginLeft: '10px', marginTop: '10px' }} onClick={addRadioOptions}>Add Radio Options</Button>
+                        {RadioeleOptions.map((ele,index)=>(
+                            <div key={index}>
+                            {editIndexoptions === index ? (
+                                <div>
+                                    <Input
+                                        type="text"
+                                        value={editNameoptions}
+                                        onChange={(e) => setEditNameoptions(e.target.value)}
+                                    />
+                                    <Button onClick={handleSaveEditOptions}>Save</Button>
+                                    <Button onClick={handleCancelEditOptions}>Cancel</Button>
+                                </div>
+                            ) : (
+                                <div>
+                                    <Button onClick={() => handleEditRadioOptions(index)}>Edit</Button>
+                                    <Button danger onClick={() => DeleteCheckBoxOptions(index)}>Delete</Button>
+                                </div>
+                            )}
+                        </div>
+                        ))}
                     </Form.Item>
                 </Form>
             </Drawer>
