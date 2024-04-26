@@ -2,7 +2,7 @@ import React from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Layout, Menu, theme } from 'antd';
-const { Header, Content } = Layout;
+const { Header} = Layout;
 import Siders from './Component/Sider';
 import Contents from './Component/Content';
 const items = [
@@ -34,23 +34,6 @@ const App = () => {
         </Header>
 
         <Layout>
-          {/* <Content
-            style={{
-              padding: '0 48px',
-            }}
-          >
-            <div
-              style={{
-                background: colorBgContainer,
-                minHeight: 280,
-                padding: 24,
-                borderRadius: borderRadiusLG,
-              }}
-              // ref={drop}
-            >
-              <h1>Drop</h1>
-            </div>
-          </Content> */}
           <Contents/>
           <Siders />
         </Layout>

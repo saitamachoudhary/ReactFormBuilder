@@ -235,7 +235,6 @@ export const RadioButton = () => {
     const handleSaveEditOptions = () => {
         if (editNameoptions.trim() !== '') {
             const newRadioOptions = [...RadioeleOptions];
-            console.log(newRadioOptions)
             newRadioOptions[editIndexoptions].name = editNameoptions;
             setRadioeleOptions(newRadioOptions);
             setEditIndexoptions(null);

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Layout,Card,Row,Col} from 'antd';
+import { Layout,Card,Row} from 'antd';
 const { Sider } = Layout;
 import { form } from "../Data/Data.json";
 import Inputs from './listComponent/Input';
