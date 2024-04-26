@@ -208,7 +208,7 @@ export const RadioButton = () => {
     const handleSaveEdit = () => {
         if (editName.trim() !== '') {
             const newRadio = [...Radioele];
-            newRadio[editIndex].name = editName;
+            newRadio[editIndex].name = editName; 
             setRadioele(newRadio);
             setEditIndex(null);
             setEditName('');
