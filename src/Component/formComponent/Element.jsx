@@ -210,7 +210,7 @@ export const RadioButton = () => {
             const newRadio = [...Radioele];
             newRadio[editIndex].name = editName; 
             setRadioele(newRadio);
-            setEditIndex(null);
+            setEditIndex(null);  
             setEditName('');
         }
     };
