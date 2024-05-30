@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Input, Button, Checkbox, Drawer, Form, Typography, Radio } from "antd";
+import { Card, Input, Button, Checkbox, Drawer, Form, Typography, Radio,Flex} from "antd";
 import { EditOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 const { Title } = Typography;
 
@@ -324,9 +324,182 @@ export const Headers = () => {
 //     )
 // }
 export const RadioButton=()=>{
-    return <Form>
-        <Form.Item label="RadioButton">
-            <Radio>A</Radio>
-        </Form.Item>
-    </Form>
+    const [RadioValue, setRadioValue] = React.useState("Radio");
+    const [open, setOpen] = React.useState(false);
+    const [Radioele, setRadioele] = React.useState([]);
+    const [editIndex, setEditIndex] = React.useState(null);
+    const [editName, setEditName] = React.useState("");
+  
+    const [RadioValueoptions, setRadioValueoptions] = React.useState("");
+    const [editIndexoptions, setEditIndexoptions] = React.useState(null);
+    const [editNameoptions, setEditNameoptions] = React.useState("");
+    const [currentRadioIndex, setCurrentRadioIndex] = React.useState(null);
+  
+    const showDrawer = () => {
+      setOpen(true);
+    };
+  
+    const onClose = () => {
+      setOpen(false);
+    };
+  
+    const addRadio = () => {
+      if (RadioValue.trim() !== "") {
+        setRadioele([...Radioele, { name: RadioValue, options: [] }]);
+        setRadioValue("");
+      }
+    };
+  
+    const handleEditRadio = (index) => {
+      setEditIndex(index);
+      setEditName(Radioele[index].name);
+    };
+  
+    const handleSaveEdit = () => {
+      if (editName.trim() !== "") {
+        const newRadio = [...Radioele];
+        newRadio[editIndex].name = editName;
+        setRadioele(newRadio);
+        setEditIndex(null);
+        setEditName("");
+      }
+    };
+  
+    const handleCancelEdit = () => {
+      setEditIndex(null);
+      setEditName("");
+    };
+  
+    const DeleteCheckBox = (index) => {
+      const ele = Radioele.filter((_, eleindex) => eleindex !== index);
+      setRadioele(ele);
+    };
+  
+    const addRadioOptions = (index) => {
+      if (RadioValueoptions.trim() !== "") {
+        const newRadioele = [...Radioele];
+        newRadioele[index].options.push({ name: RadioValueoptions });
+        setRadioele(newRadioele);
+        setRadioValueoptions("");
+      }
+    };
+  
+    const handleEditRadioOptions = (radioIndex, optionIndex) => {
+      setEditIndexoptions(optionIndex);
+      setEditNameoptions(Radioele[radioIndex].options[optionIndex].name);
+      setCurrentRadioIndex(radioIndex);
+    };
+  
+    const handleSaveEditOptions = () => {
+      if (editNameoptions.trim() !== "") {
+        const newRadioele = [...Radioele];
+        newRadioele[currentRadioIndex].options[editIndexoptions].name = editNameoptions;
+        setRadioele(newRadioele);
+        setEditIndexoptions(null);
+        setEditNameoptions("");
+        setCurrentRadioIndex(null);
+      }
+    };
+  
+    const handleCancelEditOptions = () => {
+      setEditIndexoptions(null);
+      setEditNameoptions("");
+      setCurrentRadioIndex(null);
+    };
+  
+    const DeleteCheckBoxOptions = (radioIndex, optionIndex) => {
+      const newRadioele = [...Radioele];
+      newRadioele[radioIndex].options = newRadioele[radioIndex].options.filter(
+        (_, eleindex) => eleindex !== optionIndex
+      );
+      setRadioele(newRadioele);
+    };
+  
+    return (
+      <Card>
+        <EditOutlined style={{ fontSize: "20px" }} onClick={showDrawer} />
+        <Card.Grid style={{ width: "100%" }}>
+          <Form>
+            {Radioele.map((ele, index) => (
+              <Form.Item label={ele.name} key={index}>
+                <Radio.Group>
+                  {ele.options.map((option, optionIndex) => (
+                    <Radio key={optionIndex}>{option.name}</Radio>
+                  ))}
+                </Radio.Group>
+              </Form.Item>
+            ))}
+          </Form>
+        </Card.Grid>
+        <Drawer title="Edit Element" onClose={onClose} open={open}>
+          <h1>Edit</h1>
+          <Form>
+            <Form.Item label="Radio Value">
+              <Input
+                value={RadioValue}
+                onChange={(e) => setRadioValue(e.target.value)}
+              />
+              <PlusOutlined onClick={addRadio} />
+              {Radioele.map((ele, index) => (
+                <div key={index}>
+                  {editIndex === index ? (
+                    <div>
+                      <Input
+                        type="text"
+                        value={editName}
+                        onChange={(e) => setEditName(e.target.value)}
+                      />
+                      <Button onClick={handleSaveEdit}>Save</Button>
+                      <Button onClick={handleCancelEdit}>Cancel</Button>
+                    </div>
+                  ) : (
+                    <Flex wrap="flex-wrap" gap="middle">
+                      <Button onClick={() => handleEditRadio(index)}>Edit</Button>
+                      <Button danger onClick={() => DeleteCheckBox(index)}>Delete</Button>
+                    </Flex>
+                  )}
+                </div>
+              ))}
+            </Form.Item>
+            <Form.Item label="Radio Option Value">
+              <Input
+                value={RadioValueoptions}
+                onChange={(e) => setRadioValueoptions(e.target.value)}
+              />
+              {Radioele.map((ele, index) => (
+                <div key={index}>
+                  <Button
+                    type="primary"
+                    style={{ marginLeft: "10px", marginTop: "10px" }}
+                    onClick={() => addRadioOptions(index)}
+                  >
+                    Add Radio Options
+                  </Button>
+                  {ele.options.map((option, optionIndex) => (
+                    <div key={optionIndex}>
+                      {editIndexoptions === optionIndex && currentRadioIndex === index ? (
+                        <div>
+                          <Input
+                            type="text"
+                            value={editNameoptions}
+                            onChange={(e) => setEditNameoptions(e.target.value)}
+                          />
+                          <Button onClick={handleSaveEditOptions}>Save</Button>
+                          <Button onClick={handleCancelEditOptions}>Cancel</Button>
+                        </div>
+                      ) : (
+                        <div>
+                          <Button onClick={() => handleEditRadioOptions(index, optionIndex)}>Edit</Button>
+                          <Button danger onClick={() => DeleteCheckBoxOptions(index, optionIndex)}>Delete</Button>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </Form.Item>
+          </Form>
+        </Drawer>
+      </Card>
+    );
 }
